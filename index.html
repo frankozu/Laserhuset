@@ -57,7 +57,7 @@
   </script>
 </head>
 
-<body>
+<body id="top">
 
 
   <!-- ---------- NAVBAR ---------- -->
@@ -72,10 +72,11 @@
 
       <div id="nav-menu" class="nav-menu">
         <a href="#services" class="nav-link">Tjänster</a>
-        <a href="#experts" class="nav-link">Expertis</a>
+        <a href="#experts" class="nav-link">Om oss</a>
         <a href="#technology" class="nav-link">Teknik</a>
         <a href="#ratings" class="nav-link">Omdömen</a>
-        <a href="#contact" class="nav-link btn-ghost">Boka</a>
+        <a href="#contact"     class="nav-link">Kontakt</a> 
+        <a href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" class="nav-link btn-ghost">Boka</a>
       </div>
     </nav>
   </header>
@@ -96,50 +97,238 @@
 
     </section>
 
-    <!-- ---------- SERVICES (från webbplatsens huvudkategorier) ---------- -->
-    <section id="services" class="section lux-stage" aria-labelledby="services-title" data-reveal>
-       <div class="container">
-    <header class="section-head">
-      <h2 id="services-title">Våra behandlingar</h2>
-      <p class="muted">Konsultation före behandling. Trygg information om förväntat resultat och pris.</p>
-    </header>
 
-    <div class="grid cards">
-      <article class="card" tabindex="0">
-        <h3>Permanent hårborttagning</h3>
-        <p>Skonsam laser/ljus för varaktig hårreduktion på flera områden.</p>
-        <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Se områden & priser</a>
-      </article>
-      <article class="card" tabindex="0">
-        <h3>Tatuering & pigment</h3>
-        <p>Borttagning av tatueringar samt behandling av pigmentförändringar.</p>
-        <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Läs mer & boka</a>
-      </article>
-      <article class="card" tabindex="0">
-        <h3>Acne & acneärr</h3>
-        <p>Målstyrd behandling för aktiv acne och uppföljning av ärr.</p>
-        <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Alternativ & tider</a>
-      </article>
-      <article class="card" tabindex="0">
-        <h3>Blodkärl & rosacea</h3>
-        <p>Reducerar rodnad och ytliga kärl med selektiv laser.</p>
-        <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Läs mer & boka</a>
-      </article>
-      <article class="card" tabindex="0">
-        <h3>Skin Rejuvenation</h3>
-        <p>Jämnare hudton och förbättrad lyster/struktur.</p>
-        <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Se tider</a>
-      </article>
-      <article class="card" tabindex="0">
-        <h3>Smärtbehandling (MLS)</h3>
-        <p>Ljusstimulering för att lindra smärta och påskynda läkning.</p>
-        <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Se paket & priser</a>
-      </article>
-    </div>
-    <p class="muted" style="margin-top:1rem">Fullständig lista och aktuella kampanjer finns på Bokadirekt.</p>
+<section id="services" class="section section-alt" aria-labelledby="services-title">
+  <div class="container">
+    <header class="section-head">
+      <h2 id="services-title">Tjänster</h2>
+      <p class="muted">Snabb översikt – klicka ”Läs mer” för detaljer och bokning.</p>
+
+      <button id="svcToggle"
+              class="btn-alt svc-toggle-btn"
+              type="button"
+              aria-controls="servicesList"
+              aria-expanded="false">
+        Visa alla behandlingar
+      </button>
+    </header>
+    <br>
+
+    <!-- add the id here -->
+    <div class="grid cards" id="servicesList">
+<!-- 1) HÅRBORTTAGNING -->
+<article class="card service-card" tabindex="0">
+  <h3>Permanent hårborttagning med Soprano Ice</h3>
+  <p>Skonsam laser/ljus för varaktig hårreduktion på flera områden.</p>
+
+  <div class="service-actions">
+    <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Se områden & priser</a>
+    <button class="service-toggle" aria-expanded="false" aria-controls="svc-hair">Läs mer</button>
   </div>
 
-</section>
+  <!-- MODAL (moved from .service-more) -->
+  <dialog class="service-dialog" id="svc-hair" aria-labelledby="svc-hair-title">
+    <div class="dlg-header">
+      <h4 id="svc-hair-title" class="dlg-title">Permanent hårborttagning med Soprano Ice</h4>
+      <button class="dlg-close" aria-label="Stäng">✕</button>
+    </div>
+    <div class="dlg-body">
+      <ul class="service-facts">
+        <li><strong>Passar för:</strong> Oönskad hårväxt i ansikte & kropp.</li>
+        <li><strong>Antal behandlingar:</strong> Vanl. 6–8 (individuellt).</li>
+        <li><strong>Känsla:</strong> Värme/”snäpp”, väl tolererbart.</li>
+        <li><strong>Återhämtning:</strong> Minimal/ingen downtime.</li>
+        <li><strong>Resultat:</strong> Gradvis minskning mellan sessioner.</li>
+        <li><strong>Undvik:</strong> Nylig solning, aktiv hudinfektion, graviditet.</li>
+      </ul>
+      <details class="service-faq"><summary>Vanliga frågor</summary>
+        <p><strong>Hållbarhet:</strong> Långvarigt resultat, ev. underhåll.</p>
+        <p><strong>Ljust/grått hår:</strong> Sämre respons – bedöms vid konsultation.</p>
+      </details>
+      <p class="service-price"><strong>Pris:</strong> enligt område.</p>
+      <a class="btn btn-small" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Boka konsultation</a>
+    </div>
+  </dialog>
+</article>
+ 
+
+<!-- 2) TATUERING & PIGMENT -->
+<article class="card service-card" tabindex="0">
+  <h3>Tatuering & pigment</h3>
+  <p>Borttagning av tatueringar samt behandling av pigmentförändringar.</p>
+
+  <div class="service-actions">
+    <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Läs mer & boka</a>
+    <button class="service-toggle" aria-expanded="false" aria-controls="svc-ink">Läs mer</button>
+  </div>
+
+  <dialog class="service-dialog" id="svc-ink" aria-labelledby="svc-ink-title">
+    <div class="dlg-header">
+      <h4 id="svc-ink-title" class="dlg-title">Tatuering & pigment</h4>
+      <button class="dlg-close" aria-label="Stäng">✕</button>
+    </div>
+    <div class="dlg-body">
+      <h4 class="service-subtitle">Tatueringar</h4>
+      <ul class="service-facts">
+        <li><strong>Hur det fungerar:</strong> Q-switched laser finfördelar pigment som kroppen rensar ut.</li>
+        <li><strong>Färger:</strong> Svart/röd/brun bäst; gult/grönt/blått/ljusa svårare.</li>
+        <li><strong>Känsla:</strong> Som ett gummibandssnärt. EMLA kan användas 30–60 min före.</li>
+        <li><strong>Upplägg:</strong> Sessioner med ~8 veckors mellanrum. Antal beror på storlek/färg/djup.</li>
+        <li><strong>Pris:</strong> Från 800 kr och uppåt (individuell bedömning).</li>
+        <li><strong>Att tänka på:</strong> Ej solbränd hud. Inte vid graviditet/amning.</li>
+      </ul>
+
+      <h4 class="service-subtitle">Pigmentförändringar</h4>
+      <ul class="service-facts">
+        <li><strong>Bedömning:</strong> Kräver konsultation (ev. läkarbedömning först).</li>
+        <li><strong>Vi behandlar bl.a.:</strong> Fräknar, solar lentigo, åldersfläckar, seborrisk keratos, m.m.</li>
+        <li><strong>Pris:</strong> Från 500 kr och uppåt. <em>*Vissa lesioner kräver vårdbedömning.</em></li>
+      </ul>
+
+      <a class="btn btn-small" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Boka konsultation</a>
+    </div>
+  </dialog>
+</article>
+
+
+<!-- 3) ACNE & ACNEÄRR -->
+<article class="card service-card" tabindex="0">
+  <h3>Acne & acneärr</h3>
+  <p>Målstyrd behandling för aktiv acne och uppföljning av ärr.</p>
+
+  <div class="service-actions">
+    <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Alternativ & tider</a>
+    <button class="service-toggle" aria-expanded="false" aria-controls="svc-acne">Läs mer</button>
+  </div>
+
+  <dialog class="service-dialog" id="svc-acne" aria-labelledby="svc-acne-title">
+    <div class="dlg-header">
+      <h4 id="svc-acne-title" class="dlg-title">Acne & acneärr</h4>
+      <button class="dlg-close" aria-label="Stäng">✕</button>
+    </div>
+    <div class="dlg-body">
+      <h4 class="service-subtitle">Så går behandlingen till</h4>
+      <ol class="service-steps">
+        <li><strong>Steg 1 – Inflammation:</strong> IPL/laser minskar bakterier & inflammation.</li>
+        <li><strong>Steg 2 – Talgproduktion:</strong> Långvarig minskning i talgkörtlarna.</li>
+      </ol>
+      <ul class="service-facts">
+        <li><strong>Upplägg:</strong> 2–3 beh./serie, 4–6 veckor mellanrum. Ev. uppehåll 3–6 mån.</li>
+        <li><strong>Känsla:</strong> Små snärt; 15–30 min.</li>
+        <li><strong>Efteråt:</strong> Tillfällig rodnad/svullnad möjlig. Solskydd.</li>
+        <li><strong>Resultat:</strong> Gradvis förbättring – kan blossa upp initialt.</li>
+        <li><strong>Pris:</strong> Från 1200 kr och uppåt.</li>
+      </ul>
+
+      <h4 class="service-subtitle">Acneärr</h4>
+      <p>Resultat beror på ärrens typ, djup & hudton. Målet är minskad synlighet.</p>
+
+      <a class="btn btn-small" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Boka konsultation</a>
+    </div>
+  </dialog>
+</article>
+
+
+<!-- 4) BLODKÄRL & ROSACEA -->
+<article class="card service-card" tabindex="0">
+  <h3>Blodkärl & rosacea</h3>
+  <p>Reducerar rodnad och ytliga kärl med selektiv laser.</p>
+
+  <div class="service-actions">
+    <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Läs mer & boka</a>
+    <button class="service-toggle" aria-expanded="false" aria-controls="svc-vessels">Läs mer</button>
+  </div>
+
+  <dialog class="service-dialog" id="svc-vessels" aria-labelledby="svc-vessels-title">
+    <div class="dlg-header">
+      <h4 id="svc-vessels-title" class="dlg-title">Blodkärl & rosacea</h4>
+      <button class="dlg-close" aria-label="Stäng">✕</button>
+    </div>
+    <div class="dlg-body">
+      <h4 class="service-subtitle">Blodkärl (spiders, ytliga kärl)</h4>
+      <ul class="service-facts">
+        <li><strong>Metod:</strong> IPL/laser bleker kärl – vissa kan försvinna helt.</li>
+        <li><strong>Upplägg:</strong> 2–3 beh., 2–4 veckor mellanrum (ibland räcker 1).</li>
+        <li><strong>Känsla:</strong> Kort hetta i huden.</li>
+        <li><strong>Efteråt:</strong> Övergående rodnad/irritation lokalt.</li>
+        <li><strong>Pris:</strong> Från 800 kr och uppåt.</li>
+      </ul>
+
+      <h4 class="service-subtitle">Rosacea</h4>
+      <ul class="service-facts">
+        <li><strong>Metod:</strong> IPL/laser i pulser över området.</li>
+        <li><strong>Tidsåtgång:</strong> 15–45 min.</li>
+        <li><strong>Upplägg:</strong> Seriebehandlingar för långvarigt resultat.</li>
+        <li><strong>Efteråt:</strong> Tillfällig rodnad/svullnad möjlig.</li>
+        <li><strong>Pris:</strong> Från 500 kr och uppåt.</li>
+      </ul>
+
+      <a class="btn btn-small" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Boka konsultation</a>
+    </div>
+  </dialog>
+</article>
+
+
+<!-- 5) SKIN REJUVENATION -->
+<article class="card service-card" tabindex="0">
+  <h3>Skin Rejuvenation</h3>
+  <p>Jämnare hudton och förbättrad lyster/struktur.</p>
+
+  <div class="service-actions">
+    <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Se tider</a>
+    <button class="service-toggle" aria-expanded="false" aria-controls="svc-rejuv">Läs mer</button>
+  </div>
+
+  <dialog class="service-dialog" id="svc-rejuv" aria-labelledby="svc-rejuv-title">
+    <div class="dlg-header">
+      <h4 id="svc-rejuv-title" class="dlg-title">Skin Rejuvenation</h4>
+      <button class="dlg-close" aria-label="Stäng">✕</button>
+    </div>
+    <div class="dlg-body">
+      <ul class="service-facts">
+        <li><strong>Effekter:</strong> Minskar rodnad, jämnar hudton, reducerar synliga kärl/pigmentfläckar, förbättrar struktur.</li>
+        <li><strong>Metod:</strong> IPL/laser i pulser med skyddsglasögon & kall gel.</li>
+        <li><strong>Upplägg:</strong> Vanl. 3–6 behandlingar med 2–4 veckors mellanrum.</li>
+        <li><strong>Efteråt:</strong> Lätt rodnad; ev. tillfälligt mörkare fläckar innan de ljusnar.</li>
+        <li><strong>Pris:</strong> Från 1200 kr och uppåt.</li>
+      </ul>
+
+      <a class="btn btn-small" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Boka konsultation</a>
+    </div>
+  </dialog>
+</article>
+
+
+<!-- 6) SMÄRTBEHANDLING (MLS) -->
+<article class="card service-card" tabindex="0">
+  <h3>Smärtbehandling (MLS)</h3>
+  <p>Ljusstimulering för att lindra smärta och påskynda läkning.</p>
+
+  <div class="service-actions">
+    <a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Se paket & priser</a>
+    <button class="service-toggle" aria-expanded="false" aria-controls="svc-pain">Läs mer</button>
+  </div>
+
+  <dialog class="service-dialog" id="svc-pain" aria-labelledby="svc-pain-title">
+    <div class="dlg-header">
+      <h4 id="svc-pain-title" class="dlg-title">Smärtbehandling (MLS)</h4>
+      <button class="dlg-close" aria-label="Stäng">✕</button>
+    </div>
+    <div class="dlg-body">
+      <ul class="service-facts">
+        <li><strong>Om behandlingen:</strong> Direktverkande vid inflammatorisk smärta i muskler & leder.</li>
+        <li><strong>Tidsåtgång:</strong> Några minuter till ~30 min beroende på område.</li>
+        <li><strong>Kombinationer:</strong> Kan kombineras med ordinerad medicinering (ej ta egen smärtstillande direkt före/samma dag).</li>
+        <li><strong>Efter reaktion:</strong> Kortvarig ökning av smärta kan förekomma innan tydlig lindring.</li>
+        <li><strong>Vi behandlar bl.a.:</strong> Migrän, reumatism, ischias, tennisarmbåge, karpaltunnel, muskelsmärta, m.m.</li>
+        <li><strong>Pris:</strong> Från 350 kr och uppåt (kortare behandlingar paketeras fr. 100 kr/beh.).</li>
+      </ul>
+
+      <a class="btn btn-small" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Boka konsultation</a>
+    </div>
+  </dialog>
+</article>
+</div>
 
     <!-- ---------- EXPERTS ---------- -->
 <section id="experts" class="section section-alt center-stage" aria-labelledby="experts-title" data-reveal>
@@ -166,19 +355,87 @@
 </section>
 
     <!-- ---------- TEKNIK ---------- -->
+<!-- TECHNOLOGY / MASKINER + FAQ -->
 <section id="technology" class="section tech-hero" aria-labelledby="tech-title" data-reveal>
   <div class="container tech-panel">
     <header class="section-head">
-      <h2 id="tech-title">Teknik & protokoll</h2>
-      <p class="muted">Väl beprövade metoder och strukturerad uppföljning.</p>
+      <h2 id="tech-title">Våra maskiner</h2>
+      <p class="muted">Vi använder beprövade system för att kunna ge rätt metod för dina önskemål.</p>
     </header>
-    <ul class="feature-list">
-      <li><span class="dot" aria-hidden="true"></span> Laserplattformar för pigment, kärl och hår</li>
-      <li><span class="dot" aria-hidden="true"></span> MLS för smärta/rehab</li>
-      <li><span class="dot" aria-hidden="true"></span> Fotobaserad uppföljning av resultat</li>
+
+    <!-- 6 maskiner -->
+    <ul class="feature-list" aria-label="Maskinlista">
+      <li><span class="dot" aria-hidden="true"></span> Q-Switched Nd:YAG-laser</li>
+      <li><span class="dot" aria-hidden="true"></span> Alma Soprano Ice Platinum</li>
+      <li><span class="dot" aria-hidden="true"></span> NBE1000</li>
+      <li><span class="dot" aria-hidden="true"></span> CryoPen</li>
+      <li><span class="dot" aria-hidden="true"></span> MPHI / MLS medicinsk laser</li>
+      <li><span class="dot" aria-hidden="true"></span> PhotoNova’s IPL med inbyggd kylning</li>
     </ul>
+
+    <!-- FAQ -->
+
+    <div class="faq-list" role="list">
+      <h3 >Vanliga frågor om våra maskiner</h3>
+      <details class="faq">
+        <summary>Vad är laser?</summary>
+        <div class="faq-body">
+        <p>Laser är en koncentrerad ljusstråle. Det finns olika laserljus (våglängden på ljuset). Med hjälp av olika typer av laser kan man ta bort ett stort antal olika hudförändringar och tatueringar med mycket gott resultat. Det behövs olika typer av lasermaskiner för att utföra olika behandlingar. Med exempelvis en lågpulsad diodlaser behandlar man smärta och inflammatoriska processer mycket framgångsrikt, medan man med en intensivt pulserande IPL-laser behandlar pigmentfläckar mycket framgångsrikt. Vilken maskin som används för just din behandling är individuellt utvalt. Fråga oss gärna om du har några funderingar kring våra maskiner!</p>
+        </div>
+      </details>
+
+<details class="faq">
+  <summary>Vad är IPL?</summary>
+  <div class="faq-body">
+    <p>IPL är en behandlingsform som består av ett intensivt pulserande ljus. Denna behandlingsform används bland annat till skin rejuvenation, solskadad hud, borttagning av pigmentfläckar och blodkärl och mycket mer. IPL kan även användas till permanent hårborttagning, men vi använder främst Soprano Ice. IPL är en säker metod som erbjuder individuellt utformad behandling för just din specifika hudtyp.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Vad är YAG?</summary>
+  <div class="faq-body">
+    <p>YAG används precis som IPL till en rad olika behandlingar och är en behandlingsform som består av ett intensivt pulserande ljus. Vilken av maskinerna vi använder avgörs av flera faktorer. YAG kan användas till borttagning av pigmentering (som fräknar, solfläckar, åldersfläckar, bruna fläckar, melasma, födelsemärken), acne-ärr, nagelsvamp, ytliga kärl, tatueringsborttagning och mycket mer. YAG är en säker metod som erbjuder individuellt utformad behandling för just din specifika hudtyp.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Vad är Alma Soprano Ice Platinum?</summary>
+  <div class="faq-body">
+    <p>Alma Soprano Ice Platinum är vårt senaste tillskott. Det är en lasermaskin som är speciellt utformad för smärtfri, snabb och säker permanent hårborttagning. Soprano Ice behandlar oönskad hårväxt på tre djup för att kunna ge en komplett och effektiv behandling. Behandlingen kan utföras på alla områden, även känsliga och svåra områden som öron, nacke och bikinilinje. Behandlingen fungerar på alla hud- och hårtyper; ljus, mörk och solbrun hud, tjockt och tunt hår. Läs mer om Soprano Ice här.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Vad är CryoPen?</summary>
+  <div class="faq-body">
+    <p>På under 20 sekunder fryser CryoPen bort fibrom, vårtor, pigmentfläckar, hemangioma, fettknölar, seborrheic keratoses och mycket mer. Oftast räcker det med en behandling. Kryo (frysning) behandling är naturligtvis inget nytt. Det är känt inom dermatologi över hela världen. Men, med detta instrument kan vi snabbt och effektivt behandla väldigt många olika hudåkommor med millimeterprecision. Det är ett enastående instrument för enkelt och säkert avlägsnande av olika hudförändringar utan att skada skada frisk vävnad.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Vad är NBE1000?</summary>
+  <div class="faq-body">
+    <p>NBE står för Nannic Beautifying Energy. Med NBE-utrustning (maskin och specialutvecklade krämer) utförs skönhetsbehandlingar för både kroppen och ansiktet med hjälp av radiofrekvens och värme, det vill säga elektromagnetiskt estetiska, diatermiska behandlingar. Behandling med NBE upplevs som en ljuvlig massage och kan utföras från topp till tå. Läs gärna mer om maskinen, behandlingen och hur du förbereder dig inför behandlingen här. Du kan dessutom kika på resultatbilder här.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>Vad är MLS (medicinsk laser/smärtlaster)?</summary>
+  <div class="faq-body">
+    <p>MLS (Multiwave Locked System) är resultatet av en lång tids forskning och teknologisk innovation. Lasermaskinen är speciellt utformad för att behandla smärta och skador. Vi hjälper dig inte bara att komma över den akuta smärtfasen, utan du får också rehabilitering med en långvarig effekt, så att du kan få återgå till ditt normala liv. Läs mer om hur det fungerar och vad vi behandlar här.</p>
+  </div>
+</details>
+
+<details class="faq">
+  <summary>En eller flera behandlingar?</summary>
+  <div class="faq-body">
+    <p>Beroende på vad man behandlar så behövs det olika många behandlingar för att få ett gott resultat. Du kan arbeta och göra andra dagliga aktiviteter direkt efter behandlingen.</p>
+  </div>
+</details>
+    </div>
   </div>
 </section>
+
 
 
     <!-- ---------- RATINGS (LIVE + FALLBACK) ---------- -->
@@ -193,8 +450,8 @@
             <div class="stars" aria-hidden="true">★★★★★</div>
             <div>
               <div class="rating-value"><span id="ratingValue">4.9</span> / 5</div>
-              <div class="rating-count"><span id="ratingCount">1191</span> omdömen</div>
-              <div class="rating-source"><a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Bokadirekt</a> <span class="muted">• uppdaterat <time id="ratingUpdated" datetime="2025-09-24">24 sep 2025</time></span></div>
+              <div class="rating-count"><span id="ratingCount">1229</span> omdömen</div>
+              <div class="rating-source"><a class="link" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Bokadirekt</a> <span class="muted">• uppdaterat <time id="ratingUpdated" datetime="2025-09-24">28 okt 2025</time></span></div>
             </div>
           </div>
           <a class="btn" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Läs omdömen & boka</a>
@@ -203,79 +460,53 @@
     </section>
 
     <!-- ---------- CONTACT ---------- -->
-<section id="contact" class="section contact-hero" aria-labelledby="contact-title" data-reveal>
+<section id="contact" class="section contact-hero" aria-labelledby="contact-title">
   <div class="container contact-panel">
     <header class="section-head">
       <h2 id="contact-title">Kontakt & bokning</h2>
       <p class="muted">Boka via Bokadirekt eller kontakta oss direkt.</p>
     </header>
 
-        <div class="contact-grid">
-          <form class="contact-form"
-      name="kontakt"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/tack.html"
-      aria-describedby="privacy-note">
-  <input type="hidden" name="form-name" value="kontakt" />
-  <p class="hidden">
-    <label>Fyll inte i detta: <input name="bot-field" /></label>
-  </p>
+    <div class="contact-grid">
+      <!-- Vänster: kontaktkort -->
+      <article class="contact-card" aria-labelledby="loc-title">
+        <h3 id="loc-title">Laserhuset i Karlskrona</h3>
 
-  <div class="form-grid">
-    <label>
-      <span>Namn</span>
-      <input type="text" name="name" autocomplete="name" required />
-    </label>
-    <label>
-      <span>E-post</span>
-      <input type="email" name="email" autocomplete="email" required />
-    </label>
-    <label>
-      <span>Telefon</span>
-      <input type="tel" name="tel" autocomplete="tel" inputmode="tel" />
-    </label>
-    <label class="span-2">
-      <span>Ärende</span>
-      <select name="service" aria-label="Välj tjänst">
-        <option value="">Välj…</option>
-        <option>Hårborttagning</option>
-        <option>Tatuering/pigment</option>
-        <option>Acne/ärr</option>
-        <option>Blodkärl/rosacea</option>
-        <option>Skin Rejuvenation</option>
-        <option>Smärtbehandling (MLS)</option>
-        <option>Övrigt</option>
-      </select>
-    </label>
-    <label class="span-2">
-      <span>Meddelande</span>
-      <textarea name="message" rows="5" minlength="10" placeholder="Vad vill du uppnå?"></textarea>
-    </label>
-  </div>
+        <address class="contact-address">
+          Ronnebygatan 49, 5 vån. (Hälsoplan 5)<br>
+          371 34 Karlskrona
+        </address>
 
-  <div class="consent">
-    <input id="consent" name="consent" type="checkbox" required />
-    <label for="consent">Jag samtycker till behandling av mina personuppgifter enligt <a href="#privacy" class="link">integritetspolicyn</a>.</label>
-  </div>
-
-  <button class="btn" type="submit">Skicka förfrågan</button>
-  <p id="privacy-note" class="muted privacy-note">Ingen känslig hälsoinformation via formuläret, tack.</p>
-  <p class="form-status" role="status" aria-live="polite"></p>
-</form>
-
-          <aside class="card" aria-label="Kontaktuppgifter">
-            <h3>Laserhuset i Karlskrona</h3>
-            <p>Ronnebygatan 49, 5 vån. (Hälsoplan 5)<br>371 34 Karlskrona</p>
-            <p>Telefon: <a class="link" href="tel:+46708844844">0708-844844</a><br>E-post: <a class="link" href="mailto:info@laserhuset.se">info@laserhuset.se</a></p>
-            <p><a class="btn-alt" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">Boka via Bokadirekt</a></p>
-          </aside>
+        <div class="contact-row">
+          <span class="contact-label">Telefon</span>
+          <a class="contact-link" href="tel:0708848484">0708-844844</a>
         </div>
-      </div>
 
-      
-    </section>
+        <div class="contact-row">
+          <span class="contact-label">E-post</span>
+          <a class="contact-link" href="mailto:info@laserhuset.se">info@laserhuset.se</a>
+        </div>
+
+        <a class="contact-cta" href="https://www.bokadirekt.se/places/laserhuset-19356" target="_blank" rel="noopener">
+          Boka via Bokadirekt
+        </a>
+      </article>
+
+      <!-- Höger: Google-karta -->
+      <aside class="map-card" aria-label="Karta till Laserhuset i Karlskrona">
+        <div class="map-frame">
+          <iframe
+            title="Laserhuset – Hälsoplan 5, Karlskrona"
+            src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d7473.490280185456!2d15.585866614792343!3d56.15914560655216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x46566c54a416e279%3A0xff47d9368efb1606!2sH%C3%A4lsoplan%205%2C%20Ronnebygatan%2049%2C%20371%2015%20Karlskrona!3m2!1d56.1620527!2d15.584237799999999!5e0!3m2!1ssv!2sse!4v1761651557002!5m2!1ssv!2sse"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
   </main>
 
   <!-- ---------- FOOTER ---------- -->
@@ -283,7 +514,6 @@
     <div class="container footer-grid">
       <p>© <span id="year"></span> Laserhuset i Karlskrona. Alla rättigheter förbehållna.</p>
       <nav aria-label="Sekundär">
-        <a href="#privacy" class="link">Integritet</a>
         <a href="#top" class="link">Till toppen</a>
       </nav>
     </div>

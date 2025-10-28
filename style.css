@@ -39,6 +39,7 @@
 html:focus-within{scroll-behavior:smooth}
 html,body{min-height:100%; overflow-x:hidden;} /* allow page to grow vertically */ /* prevent horizontal scroll */
 body{
+  padding-top: var(--nav-h);
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
   color:var(--color-text);
@@ -63,14 +64,23 @@ button{font:inherit}
 
 /* Header: bright glass with subtle border */
 .site-header{
-  position:sticky; top:0; z-index:50;
-  background:rgba(255,255,255,.82);
-  backdrop-filter:saturate(140%) blur(8px);
-  border-bottom:1px solid rgba(0,0,0,.06);
-  transition:box-shadow var(--trans), background var(--trans);
-  z-index: 2000;
+  position: fixed;      /* <- robust sticky */
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 4000;
+  background: rgba(255,255,255,.82); /* samma look som tidigare */
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  backface-visibility: hidden;
 }
 
+/* Skugga när man har scrollat – din klass används redan av JS */
+.site-header.is-scrolled{
+  box-shadow: var(--shadow-sm);
+  background: #fff;
+}
 .hero-media, .hero-overlay { pointer-events: none; }
 
 /* ---------- NAV ---------- */
@@ -162,6 +172,7 @@ button{font:inherit}
 }
 .hero-content {position:relative;padding-block:var(--space-20)}
 .display{font-size:clamp(3rem, 4vw + 1rem, 2rem);line-height:1.1;letter-spacing:.01em;margin-right:20rem }
+
 .subtle{color:var(--color-accent)}
 .lede{margin-block:var(--space-4) var(--space-8);max-width:60ch;color:var(--color-muted)}
 .cta{display:flex;flex-wrap:wrap;gap:var(--space-4)}
@@ -224,6 +235,14 @@ button{font:inherit}
   padding:var(--space-8);
   box-shadow:var(--shadow-sm);
 }
+
+
+
+
+
+
+
+
 .card:focus-visible{outline:2px solid var(--color-accent)}
 .ticks{padding-left:1.2rem}
 .ticks li{margin-block:.25rem}
@@ -239,9 +258,41 @@ button{font:inherit}
   justify-content:center;
   min-height: clamp(560px, 48vw, 820px);
   padding-block: clamp(2rem, 6vh, 4rem);
+  
 }
+
+/* Reduce the tall canvas of "Om Laserhuset" on desktop */
+@media (min-width: 901px){
+  #experts.center-stage{
+    min-height: auto;                    /* was: clamp(560px,48vw,820px) */
+    padding-top: clamp(1rem, 2vh, 2rem);
+    padding-bottom: var(--space-8);      /* gentle spacing below */
+  }
+  #experts .about-panel{
+    margin: 0;                           /* ensure no extra gap */
+  }
+}
+
+/* Pull Technology closer to Experts (desktop only) */
+@media (min-width: 901px){
+  #experts + #technology.tech-hero{
+    margin-top: -20px; /* tweak: -12px … -32px to taste */
+  }
+}
+
+/* Keep phones tidy (no negative margins) */
+@media (max-width: 900px){
+  #experts.center-stage{
+    min-height: auto;
+    padding-block: var(--space-8);
+  }
+  #experts + #technology.tech-hero{
+    margin-top: 0;
+  }
+}
+
 #experts .about-panel{
-  margin:0;
+  margin-top: 100px;
   max-width: min(1120px, 92vw);
   background:#fff;
   border:1px solid rgba(15,18,16,.06);
@@ -265,69 +316,127 @@ button{font:inherit}
   box-shadow:var(--shadow-sm);
 }
 
-/* ---------- CONTACT ---------- */
-.hero-media1 { background-image:url('bilder/bedlaying.jpg'); }
+/* ---------- CONTACT (Premium) ---------- */
 
-.contact-form{
-  background:var(--color-surface);
-  border:1px solid rgba(15,18,16,.06);
-  border-radius:var(--radius-2xl);
-  padding:var(--space-8);
-  box-shadow:var(--shadow-sm);
-}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6)}
-.form-grid .span-2{grid-column:1 / -1}
-label{display:grid;gap:.5rem}
-input,select,textarea{
-  appearance:none;
-  background:#FBFCFB;
-  border:1px solid rgba(15,18,16,.12);
-  color:var(--color-text);
-  padding:.8rem;
-  border-radius:var(--radius-md);
-  min-height:44px;
-}
-input::placeholder,textarea::placeholder{color:#8A938E}
-input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--color-accent)}
-.consent{display:flex;align-items:flex-start;gap:.5rem;margin-block:var(--space-6)}
-.privacy-note{margin-top:.5rem}
-
-/* Right-hand Kontakt card with image background */
-.contact-info{
-  position: relative;
-  overflow: hidden;                 /* keeps the image clipped to the radius */
-  /* keeps existing .card border/shadow/radius/padding */
+/* Soft luxury backdrop for the section */
+.contact-hero{
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(29,150,104,.06), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(29,150,104,.05), transparent 55%),
+    var(--color-bg);
 }
 
+/* Center the panel and keep a comfortable max-width */
+.contact-panel{max-width: 920px; margin-inline: auto}
 
-/* Ensure the text/content sits above the image+overlay */
-.contact-info > *{
-  position: relative;
-  z-index: 1;
-}
-
-
-/* Kontakt: two columns on desktop, one on mobile */
+/* If you later re-add a form, this grid will adapt to 2 cols on wide screens */
 .contact-grid{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:2rem;
+  display: grid;
+  gap: var(--space-8);
+  justify-content: center;
 }
 
-@media (max-width: 900px){
-  .contact-grid{ grid-template-columns:1fr; gap:1rem; }
-
-  /* Mobile padding/radius so cards don't look bulky */
-  #contact .contact-form,
-  #contact aside.card{
-    padding: var(--space-6);
-    border-radius: 24px;
-    box-shadow: var(--shadow-sm);
+/* By default we show one centered column (the card) */
+@media (min-width: 980px){
+  .contact-grid{
+    grid-template-columns: minmax(0, 620px);
   }
-
-  /* Tighter spacing under the section title */
-  #contact .section-head{ margin-bottom: var(--space-6); }
 }
+
+/* Premium contact card with subtle image + overlay */
+.contact-card{
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+  isolation: isolate; /* ensures overlay layers behave */
+}
+
+.contact-card::before{ display:none; }
+
+/* Background image (very subtle) */
+.contact-card::before{
+  content:"";
+  position:absolute; inset:0;
+  background: url('bilder/bedlaying.jpg') center/cover no-repeat;
+  opacity:.16;
+  filter: saturate(.7) blur(2px);
+  z-index: -2;
+}
+
+/* Soft white veil + edge highlight for a "glass" feel */
+.contact-card::after{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.78));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+  z-index: -1;
+}
+
+/* Headings & spacing */
+.contact-card h3{
+  margin: 0 0 .5rem 0;
+  font-size: clamp(1.1rem, 1rem + .6vw, 1.35rem);
+}
+
+/* Address block */
+.contact-address{
+  margin: 0 0 1rem 0;
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--color-text);
+  opacity: .95;
+}
+
+/* Label + link rows */
+.contact-row{
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+  gap: .75rem;
+  margin: .35rem 0;
+}
+
+.contact-label{
+  color: var(--color-muted);
+  font-size: .95rem;
+}
+
+/* Links with premium underline animation */
+.contact-link{
+  position: relative;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(15,18,16,.18);
+  transition: border-color .2s ease, color .2s ease;
+}
+.contact-link:hover{ border-color: var(--color-accent) }
+
+/* CTA button – rounded, subtle depth */
+.contact-cta{
+  display: inline-block;
+  margin-top: clamp(1rem,.8rem + .6vw,1.25rem);
+  padding: .9rem 1.15rem;
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(180deg, var(--color-accent), color-mix(in oklab, var(--color-accent) 85%, black));
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow:
+    0 6px 14px rgba(16, 102, 73, .18),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
+}
+.contact-cta:hover{
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 18px rgba(16, 102, 73, .22),
+    inset 0 1px 0 rgba(255,255,255,.22);
+  filter: brightness(1.02);
+}
+.contact-cta:active{ transform: translateY(0) }
+
+/* Respect your existing tokens */
+.link{ color: inherit }
 
 
 
@@ -354,59 +463,76 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px soli
 /* Reserve space for the right-side image on wide screens */
 /* Technology hero container */
 #technology.tech-hero{
-  --tech-h: clamp(560px, 48vw, 820px);
-  --fade-left: rgba(247,248,247,.92);
-  --fade-mid:  rgba(247,248,247,.50);
-  --fade-none: rgba(247,248,247,0);
+  --hero-h: clamp(560px, 48vw, 820px);   /* same visual height as your image */
+  padding-top: var(--hero-h);            /* creates space for the hero image */
   position: relative;
-  padding: 0;
-  min-height: var(--tech-h);
-  overflow: hidden;  /* fallback */
-  overflow: clip;    /* modern */
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  overflow: clip;
+    padding-block: 0;        /* remove top/bottom gutters */
+  background: transparent; /* kill the grey section fill */
 }
+
+
 
 /* Contact hero container (you were missing this base block entirely) */
 
 
-/* The background image (legs visible) */
+/* =========================
+   TECHNOLOGY (full-bleed hero)
+   ========================= */
+
+
+/* Nudge the tech hero closer to the section above (if any residual gap remains) */
+#experts + #technology.tech-hero{
+  margin-top: -8px;        /* tweak to taste: -4px … -12px */
+}
+
+/* Keep mobile tidy (no negative margin needed) */
+@media (max-width: 900px){
+  #technology.tech-hero{
+    margin-top: 0;         /* reset on phones */
+    padding-bottom: var(--space-12); /* your existing mobile spacing */
+  }
+}
+
+
+
+
+/* Background image (zoomed OUT: fit width, show more of the photo) */
 #technology.tech-hero::before{
   content:"";
-  position:absolute; inset:0;
-  background-image: url('bilder/legs.jpg'); /* your JPG */
-  background-size: cover;
-  /* aim at the legs → push focus to right/bottom */
-  background-position: right 8% bottom 0;
+  /* TA BORT absolut positionering */
+  position: static;
+  inset: auto;
+
+  display:block;
+  /* full-bleed över hela bredden */
+  width:100vw;
+  margin-inline: calc(50% - 50vw);
+
+  /* visa hela bilden på bredden – zooma inte in */
+  background: url('bilder/legs2.jpg') center / 100% auto no-repeat;
   filter: saturate(105%) contrast(98%);
+
+  /* höjd på fotot (justera vid behov) */
+  aspect-ratio: 21 / 9;        /* eller 16/8 – välj det som matchar din bild bäst */
+  min-height: 480px;           /* säkerställ att den är tillräckligt hög på stora skärmar */
 }
 
-/* Readability fade from left → transparent (over the photo) */
-#technology.tech-hero::after{
-  content:"";
-  position:absolute; inset:0;
-  background:
-    linear-gradient(90deg,
-      var(--fade-left) 0%,
-      var(--fade-left) 1%,
-      var(--fade-mid) 12%,
-      var(--fade-none) 24%);
-  pointer-events:none;
-}
+/* Left-to-right readability fade over the photo */
 
-#technology.tech-hero::before,
-#technology.tech-hero::after { pointer-events: none; }
-
-section[id] { scroll-margin-top: var(--nav-h); }
-
-/* Centered content panel */
+/* Content panel */
 #technology .tech-panel{
-  position: absolute;
-  left: 50%;
-  bottom: clamp(2rem, 6vh, 4rem);
-  transform: translateX(-50%);
-  z-index: 1;
+  position: static;
+  transform: none;
+  left:auto; right:auto; bottom:auto;
 
-  max-width: min(980px, 86vw);
-  margin: 0;
+  max-width: min(var(--container), 92vw);
+margin: 0 auto var(--space-12);
+  display:grid;
+  grid-template-columns: minmax(360px, 1.1fr) minmax(320px, 1fr);
+  gap: var(--space-8);
 
   background: rgba(255,255,255,.92);
   -webkit-backdrop-filter: blur(6px);
@@ -416,64 +542,161 @@ section[id] { scroll-margin-top: var(--nav-h); }
   padding: clamp(1.25rem, 2vw, 2rem) clamp(2rem, 3vw, 3rem);
   box-shadow: var(--shadow-sm);
 }
+#technology .tech-panel .section-head{ grid-column: 1 / -1; }
 
-#technology.tech-hero{ position: relative; }  /* ensure positioning context */
+/* Optional column divider on desktop */
+@media (min-width: 901px){
+  #technology .tech-panel .faq-list{
+    padding-left: var(--space-8);
+    border-left: 1px solid rgba(15,18,16,.06);
+  }
+}
 
-/* Tidy list bullets to feel premium on glass */
+/* Mobile keeps stacking (you already had this) */
+@media (max-width: 900px){
+  #technology .tech-panel{
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  #technology .tech-panel .faq-list{
+    padding-left: 0;
+    border: 0;
+  }
+}
+
+/* Small helpers */
+section[id]{ scroll-margin-top: var(--nav-h); }
 #technology .feature-list .dot{ background: var(--brand-green); }
 #technology .muted{ color: #5F6762; }
 
-
-@supports (padding: max(0px)){
-  body{ padding-bottom: max(0px, env(safe-area-inset-bottom)); }
-}
-
-/* Mobile: stronger fade & natural height */
+/* ===== Mobile: image as its own block, panel below (no overlay) ===== */
 @media (max-width: 900px){
-  /* Section behaves like desktop but sized for phones */
-#technology.tech-hero{
-  padding: var(--space-12) 0;   /* regular section spacing */
-  overflow: visible;
-  min-height: initial;
-}
-#technology.tech-hero::before{ content: none; }  /* ← remove background image */
-#technology.tech-hero::after{  content: none; }  /* ← remove fade overlay    */
+  #technology.tech-hero{
+    padding: 0 0 var(--space-12);
+    min-height: initial;
+  }
 
-  /* Panel sits in normal flow, centered, like a glass card */
+  #technology.tech-hero::before{
+    position: static;           /* becomes a real block above content */
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 11;      /* adjust if you want a taller/shorter photo */
+    min-height: 300px;
+    background: url('bilder/legs2.jpg') center / 100% auto no-repeat; /* fit width */
+    filter: none;
+    content: "";
+  }
+
+  #technology.tech-hero::after{ display: none; } /* fade not needed on mobile */
+
+  #technology .tech-panel{
+    position: static;
+    transform: none;
+    margin: var(--space-6) auto 0;
+    max-width: min(900px, 94vw);
+    border-radius: 24px;
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* Put content in two columns *inside* the card */
 #technology .tech-panel{
-  position: static;                 /* below (no overlay) */
-  left: auto; bottom: auto; transform: none;
-  max-width: min(900px, 94vw);
-  margin: 0 auto;                   /* centered */
-  display: flex;                    /* horizontal card layout */
+  display: grid;
+  grid-template-columns: minmax(360px, 1.1fr) minmax(320px, 1fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* Title row stays full width */
+#technology .tech-panel .section-head{
+  grid-column: 1 / -1;
+  margin-bottom: .25rem;
+}
+
+/* Left: machines list, Right: FAQ block */
+#technology .tech-panel .feature-list{ grid-column: 1; }
+#technology .tech-panel .faq-list{ grid-column: 2; }
+
+/* Optional: a subtle divider between the two columns */
+@media (min-width: 901px){
+  #technology .tech-panel{
+    position: relative;
+  }
+  #technology .tech-panel .faq-list{
+    padding-left: var(--space-8);
+    border-left: 1px solid rgba(15,18,16,.06);
+  }
+}
+
+/* Mobile: stack nicely */
+@media (max-width: 900px){
+  #technology .tech-panel{
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  #technology .tech-panel .faq-list{
+    grid-column: 1;
+    padding-left: 0;
+    border: 0;
+  }
+}
+
+/* FAQ accordion i teknik-kortet */
+.faq-list h3{
+  margin: 0 0 .5rem 0;
+  color: var(--brand-green);
+}
+
+/* Ta bort standardtriangeln och styla egen */
+.faq summary{
+  list-style: none;
+  cursor: pointer;
+  font-weight: 600;
+  padding: .75rem 0;
+  display: flex;
   align-items: center;
-  gap: var(--space-6);
-  padding: var(--space-6);
-  background: rgba(255,255,255,.90);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border-radius: 28px;
-  box-shadow: var(--shadow-sm);
+  gap: .6rem;
+  outline: none;
+}
+.faq summary::-webkit-details-marker{ display: none; }
+
+/* Liten pil som roterar vid öppning (matchar din gröna accent) */
+.faq summary::before{
+  content: "▸";
+  display: inline-block;
+  transform: translateY(1px) rotate(0deg);
+  transition: transform 200ms var(--trans);
+  color: var(--brand-green);
+  width: 1ch;
+  flex: 0 0 1ch;
+}
+.faq[open] summary::before{
+  transform: translateY(1px) rotate(90deg);
+}
+
+/* Avgränsare mellan frågor */
+.faq{
+  border-top: 1px solid rgba(15,18,16,.10);
+}
+.faq:last-of-type{
+  border-bottom: 1px solid rgba(15,18,16,.10);
+}
+
+/* Innehållet */
+.faq-body{
+  padding: 0 0 .9rem 1.4rem;     /* indrag under pilen */
+  color: var(--color-muted);
+}
+
+/* Fokusring för tillgänglighet */
+.faq summary:focus-visible{
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 
-
-#technology .tech-panel .section-head{ 
-  margin: 0; 
-  flex: 1 1 46%;                 /* title+lede on the left */
-}
-#technology .tech-panel .feature-list{ 
-  flex: 1 1 54%;                 /* bullets on the right */
-}
-
-}
-
-
-
-
-
-
-#experts.section{ padding-block: 0; }
 
 /* ---------- REVEAL ANIM ---------- */
 @media (prefers-reduced-motion:no-preference){
@@ -510,9 +733,244 @@ section[id] { scroll-margin-top: var(--nav-h); }
 
   .brand-logo{ height: 70px; }
 
+    .section{ padding-block: var(--space-12); }        /* ~48px */
+
+  /* "Om Laserhuset" had padding:0; restore on mobile */
+  #experts.section{ padding-block: var(--space-12); }
+
+  /* Ensure extra breathing room around full-bleed tech section */
+  #technology.tech-hero{ padding-bottom: var(--space-16); }  /* add ~64px below */
+
+  /* The services and contact sections often sit next to others—buffer them */
+  #services.section{ padding-bottom: var(--space-16); }
+  #contact.contact-hero{ padding-top: var(--space-16); }
+}
+
+/* If a section immediately follows another, add a little top gap on mobile */
+@media (max-width: 680px){
+  .section + .section{ margin-top: var(--space-6); } /* ~24px */
+
+
 }
 @media (max-width: 560px){
   .cards,.team,.form-grid{grid-template-columns:1fr}
   .form-grid label{ grid-column: 1 / -1; }
   .consent{ margin-top:.25rem; }
+}
+
+/* --- DENSE SERVICES LIST (rows) --- */
+#services .container{ max-width: var(--container); }
+
+#services .grid.cards{
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: var(--space-4);
+}
+
+/* Turn each card into a tight 2-col row */
+#services .card.service-card{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .75rem 1rem;
+  padding: .9rem 1rem;               /* down from var(--space-8) */
+  border-radius: var(--radius-lg);
+  min-height: unset;
+}
+
+/* Title + one-line benefit */
+#services .service-card h3{
+  margin: 0;
+  font-size: 1.07rem;
+  line-height: 1.25;
+}
+#services .service-card p{
+  margin: 0;
+  color: var(--color-muted);
+  white-space: normal;     /* ← allow multiple lines */
+  overflow: visible;       /* ← no clipping */
+  text-overflow: unset;    /* ← no ellipsis */
+}
+
+/* Actions inline to the right */
+#services .service-actions{
+  grid-column: 2 / 3;
+  grid-row: 1 / span 2;
+  display: inline-flex;
+  gap: .5rem;
+  align-self: start;    
+  align-items: center;
+  justify-self: end;
+  margin: 0;
+}
+#services .service-actions .link,
+#services .service-toggle{
+  appearance: none;
+  border: 1px solid rgba(15,18,16,.12);
+  background: #fff;
+  padding: .45rem .7rem;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+#services .service-toggle:focus-visible{ outline: 3px solid #6ee7b7; outline-offset: 2px; }
+
+/* Hover feedback */
+#services .service-card:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgb(0 0 0 / .06);
+}
+
+/* Desktop/wide: keep actions only as wide as their content */
+@media (min-width: 960px){
+  #services .card.service-card{
+    grid-template-columns: 1fr max-content;   /* was: 1fr auto */
+    align-items: start;
+  }
+  #services .service-actions{
+    justify-self: end;
+    align-self: start;
+  }
+
+  /* Optional: ensure the text column never gets too narrow */
+  #services .grid.cards > .service-card{
+    min-width: 540px;                          /* tweak 480–560px to taste */
+  }
+
+  /* Optional: nicer reading width if your cards ever stretch very wide */
+  #services .service-card p{ max-width: 62ch; }
+}
+
+
+/* Mobile toggle button style */
+.svc-toggle-btn{ display:none; } /* hidden by default */
+.svc-toggle-btn{ display:none; } /* desktop: hidden */
+@media (max-width: 680px){
+  .svc-toggle-btn{
+    display:inline-flex; align-items:center; gap:.5rem;
+    margin-top:.5rem;
+    border:1px solid rgba(15,18,16,.12);
+    border-radius:999px; padding:.6rem 1rem; background:#fff;
+    font-weight:600;
+  }
+}
+
+/* Collapsible container on mobile */
+@media (max-width: 680px){
+  #servicesList{
+    overflow: hidden;
+    /* ensure the animation is smooth */
+    max-height: none;              /* expanded by default (desktop behavior) */
+    will-change: max-height;
+    transition: max-height 320ms ease;
+  }
+  /* collapsed state */
+  #servicesList.is-collapsed{
+    max-height: 0 !important;
+    margin-block: 0 !important;    /* kill any outer spacing if present */
+    padding-block: 0 !important;   /* safety if padding is ever added */
+  }
+}
+
+
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce){
+  #servicesList{ transition: none !important; }
+}
+
+/* Mobile stacks tightly */
+@media (max-width: 640px){
+  #services .grid.cards{ grid-template-columns: 1fr; }
+  #services .card.service-card{
+    grid-template-columns: 1fr;
+    gap: .5rem;
+    padding: .8rem .9rem;
+  }
+  #services .service-actions{
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-self: start;
+  }
+}
+
+/* --- Modal styling (if not added yet) --- */
+.service-dialog{
+  width: min(720px, 92vw);
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 24px 60px rgb(0 0 0 / .28);
+}
+.service-dialog::backdrop{ background: rgb(2 6 23 / .55); backdrop-filter: blur(2px); }
+.service-dialog .dlg-header{ padding: 1rem 1.25rem; border-bottom: 1px solid #eef2f7; display:flex; justify-content:space-between; gap:.5rem; }
+.service-dialog .dlg-title{ font-size: 1.125rem; margin: 0; }
+.service-dialog .dlg-close{ appearance: none; background: transparent; border: none; font-size: 1rem; cursor: pointer; }
+.service-dialog .dlg-body{ padding: 1rem 1.25rem; }
+
+
+
+
+/* Make the contact section full-bleed and prevent tiny scrollbars */
+#contact.contact-hero{
+  width: 100vw;
+  margin-inline: calc(50% - 50vw); /* break out of page container */
+  overflow-x: clip;
+}
+
+/* Edge-to-edge greenish wash (no transparent holes at the sides) */
+#contact.contact-hero{
+  /* soft green base + radial accents */
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(29,150,104,.08), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(29,150,104,.07), transparent 55%),
+    color-mix(in oklab, var(--brand-green) 5%, var(--color-bg)); /* solid base tint */
+  background-repeat: no-repeat;
+}
+
+
+
+/* Grid: två kolumner på desktop (kort vänster, karta höger) */
+.contact-grid{
+  display: grid;
+  gap: var(--space-8);
+  grid-template-columns: minmax(0, 540px) minmax(0, 1fr);
+  align-items: start;
+}
+
+/* Kart-kort med samma känsla som kontaktkortet */
+.map-card{
+  background: #fff;
+  border: 1px solid rgba(15,18,16,.06);
+  border-radius: 24px;
+  box-shadow: var(--shadow-sm);
+  padding: 0;               /* iframe fyller */
+  overflow: hidden;
+}
+
+/* Håller 16:9 och gör iframen helt responsiv */
+.map-frame{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;     /* stöds brett; faller tillbaka på höjd nedan vid behov */
+  min-height: 320px;        /* säker höjd på mindre skärmar */
+}
+.map-frame iframe{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+
+/* Mobil: stapla (kort överst, karta under) */
+@media (max-width: 980px){
+  .contact-grid{
+    grid-template-columns: 1fr;
+  }
+  .map-frame{ min-height: 260px; }
+}
+
+
+/* Mobile keeps full-bleed and spacing tidy */
+@media (max-width: 680px){
+  #contact.contact-hero{
+    padding-block: var(--space-12);
+  }
 }

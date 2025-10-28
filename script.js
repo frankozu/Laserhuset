@@ -43,6 +43,21 @@ const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 
 onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
+
+
+/* ---------- SERVICE DIALOGS ---------- */
+
+  document.querySelectorAll('.service-toggle').forEach(btn => {
+    const id = btn.getAttribute('aria-controls');
+    const dlg = document.getElementById(id);
+    const closeBtn = dlg.querySelector('.dlg-close');
+
+    btn.addEventListener('click', () => { dlg.showModal(); btn.setAttribute('aria-expanded','true'); closeBtn.focus(); });
+    closeBtn.addEventListener('click', () => { dlg.close(); });
+    dlg.addEventListener('close', () => { btn.setAttribute('aria-expanded','false'); btn.focus(); });
+    dlg.addEventListener('mousedown', (e) => { if (e.target === dlg) dlg.close(); }); // click backdrop to close
+  });
+
 /* ---------- MOBILE NAV (single source of truth) ---------- */
 const toggle = document.querySelector('.nav-toggle');
 const menu   = document.querySelector('#nav-menu');
@@ -86,26 +101,37 @@ if (toggle && menu) {
   });
 
   // close on in-page nav click with header offset
-  menu.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    if (!link) return;
-    const href = link.getAttribute('href') || '';
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
-        setOpen(false);
-        setTimeout(() => {
-          window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
-        }, 30);
-      } else {
-        setOpen(false);
-      }
+menu.addEventListener('click', (e) => {
+  const link = e.target.closest('a');
+  if (!link) return;
+
+  const href = link.getAttribute('href') || '';
+
+  if (href.startsWith('#')) {
+    e.preventDefault();
+
+    // --- SPECIAL CASE: “Teknik” should scroll to the panel (content), not the hero top
+    let target = null;
+    if (href === '#technology') {
+      target = document.querySelector('#technology .tech-panel') || document.querySelector('#technology');
+    } else {
+      target = document.querySelector(href);
+    }
+
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+      setOpen(false);
+      setTimeout(() => {
+        window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
+      }, 30);
     } else {
       setOpen(false);
     }
-  });
+  } else {
+    setOpen(false);
+  }
+});
+
 
   // respond to viewport changes
   const onChange = () => {
@@ -199,4 +225,69 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     }, { rootMargin: '20% 0% -5% 0%', threshold: 0.01 });
     document.querySelectorAll('.lux-img').forEach(el => ioLux.observe(el));
   }
+  
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('servicesList');
+  const btn  = document.getElementById('svcToggle');
+
+  if (!grid || !btn) return;
+
+  const isMobile = () => window.matchMedia('(max-width: 680px)').matches;
+
+  function collapse() {
+    // set explicit height for smooth transition then collapse
+    grid.style.maxHeight = grid.scrollHeight + 'px';
+    requestAnimationFrame(() => { grid.classList.add('is-collapsed'); grid.style.maxHeight = '0px'; });
+    btn.setAttribute('aria-expanded','false');
+    btn.textContent = 'Visa alla behandlingar';
+  }
+
+  function expand() {
+    grid.classList.remove('is-collapsed');
+    grid.style.maxHeight = grid.scrollHeight + 'px';
+    // clear inline style after transition to allow natural growth
+    grid.addEventListener('transitionend', function tidy(e){
+      if (e.propertyName === 'max-height') grid.style.maxHeight = '';
+      grid.removeEventListener('transitionend', tidy);
+    });
+    btn.setAttribute('aria-expanded','true');
+    btn.textContent = 'Dölj behandlingar';
+  }
+
+  function initState() {
+    if (isMobile()) {
+      btn.style.display = 'inline-flex';
+      collapse();
+    } else {
+      btn.style.display = 'none';
+      grid.classList.remove('is-collapsed');
+      grid.style.maxHeight = '';
+      btn.setAttribute('aria-expanded','true');
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    expanded ? collapse() : expand();
+  });
+
+  // initialize and keep in sync on resize/orientation changes
+  initState();
+  window.addEventListener('resize', initState);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const groups = document.querySelectorAll('.faq-list');
+  groups.forEach(group => {
+    const items = group.querySelectorAll('details.faq');
+    items.forEach(d => {
+      d.addEventListener('toggle', () => {
+        if (d.open) {
+          items.forEach(other => { if (other !== d) other.open = false; });
+        }
+      });
+    });
+  });
+});
